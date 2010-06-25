@@ -7,7 +7,11 @@ var request_extensions = {
 
   extract_form_params: function(chunk){
     if( chunk == undefined ) { return }
-    var chunks = chunk.toString().replace(/\+/g, '%20').split('&')
+    chunk = chunk.toString();
+
+    this.postBody = ('postBody' in this) ? this.postBody + chunk : chunk;
+
+    var chunks = chunk.replace(/\+/g, '%20').split('&')
     for(var i in chunks){
       var k_v = chunks[i].split('=')
       this[k_v[0]] = decodeURIComponent(k_v[1])
